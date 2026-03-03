@@ -47,3 +47,11 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
             f"time={len(times)}, temp={len(temps)}, precip={len(precip)}, "
             f"precip_prob={len(precip_prob)}, is_day={len(is_day)}"
         )
+
+    # define time window for filtering: last 24 hours + next 1 hour from now, per prompt requirements
+    now_utc = dt.datetime.now(dt.timezone.utc)                          # define current time
+    window_start = now_utc - dt.timedelta(hours=24)                     # 24 hours ago
+    window_end = now_utc + dt.timedelta(hours=1)                        # 1 hour from now
+
+    rows: List[Dict[str, Any]] = [] # will hold the final row-shaped records
+    ingested_at = now_utc.isoformat() # timestamp for when data was ingested
