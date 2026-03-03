@@ -39,3 +39,11 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
     precip = hourly.get("precipitation") or []
     precip_prob = hourly.get("precipitation_probability") or []
     is_day = hourly.get("is_day") or []
+
+    n = len(times) # num hourly values returned; should be same for all
+    if not all(len(arr) == n for arr in [temps, precip, precip_prob, is_day]):
+        raise ValueError(
+            f"Hourly arrays length mismatch for {location.name}: "
+            f"time={len(times)}, temp={len(temps)}, precip={len(precip)}, "
+            f"precip_prob={len(precip_prob)}, is_day={len(is_day)}"
+        )
