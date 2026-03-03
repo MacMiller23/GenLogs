@@ -1,6 +1,6 @@
 from __future__ import annotations
 import datetime as dt
-import json
+import time
 from typing import Any, Dict, List
 import requests
 from genlogs_weather.config.locations import Location
@@ -63,3 +63,23 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
 
     rows: List[Dict[str, Any]] = [] # will hold the final row-shaped records
     ingested_at = now_utc.isoformat() # timestamp for when data was ingested
+
+    for i, t in enumerate(times):
+        ts = dt.datetime.fromisoformat(t).replace(tzinfo=dt.timezone.utc)
+        if window_start <= ts <= window_end:
+            rows.append(
+                {
+                    "location_name": location.name,
+                    "latitude": location.lat,
+                    "longitude": location.lon,
+                    "forecast_hour": ts.isoformat(),
+                    "temperature_2m": temps[i],
+                    "precipitation": precip[i],
+                    "precipitation_probability": precip_prob[i],
+                    "is_day": is_day[i],
+                    "ingested_at": ingested_at,
+                    "source": "open-meteo",
+                }
+            )
+
+    return rows
