@@ -3,7 +3,8 @@ from __future__ import annotations
 import logging
 import os
 from dotenv import load_dotenv
-from genlogs_weather.config.locations import LOCATIONS #config/locations.py 
+from genlogs_weather.config.locations import LOCATIONS #config/locations.py
+from genlogs_weather.extract.openmateo import fetch_hourly_weather_rows #extract/openmateo.py
 
 # Load .env for secure configs
 load_dotenv()
@@ -30,4 +31,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    rows = fetch_hourly_weather_rows(LOCATIONS[0])
+    logger.info(f"Rows returned: {len(rows)}")
     main()
