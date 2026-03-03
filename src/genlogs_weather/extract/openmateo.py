@@ -9,13 +9,13 @@ OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
 def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
     """
-    Fetch hourly weather data for a single location and return row-shaped records:
-    one row per (location, forecast_hour).
+        Fetch hourly weather data for a single location and return row-shaped records:
+        one row per (location, forecast_hour).
 
-    Requirements mapping:
-    - Include: temperature, precipitation, precipitation_probability, is_day
-    - Ingest: 24 hours of history + next 1 hour of forecast
-    """
+        Requirements mapping:
+        - Include: temperature, precipitation, precipitation_probability, is_day
+        - Ingest: 24 hours of history + next 1 hour of forecast
+        """
     params = {
         "latitude": location.lat,
         "longitude": location.lon,
@@ -29,10 +29,18 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
         "timezone": "UTC",
     }
 
-    response = requests.get(OPEN_METEO_URL, params=params, timeout=30)
-    response.raise_for_status()
-    payload = response.json()
-    
+    last_err: Exception | None = None
+    for attempt in range(3):
+        try:
+            resp = requests.get(OPEN_METEO_URL, params=params, timeout=30)
+            resp.raise_for_status()
+            payload = resp.json()
+            break
+        except requests.RequestException as e:
+            last_err = e
+            time.sleep(1)  # simple backoff for transient network/HTTP issues
+    else:
+        raise RuntimeError(f"Open-Meteo request failed for {location.name}") from last_err
     hourly = payload.get("hourly") or {}
     times = hourly.get("time") or []
     temps = hourly.get("temperature_2m") or []
@@ -49,9 +57,9 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
         )
 
     # define time window for filtering: last 24 hours + next 1 hour from now, per prompt requirements
-    now_utc = dt.datetime.now(dt.timezone.utc)                          # define current time
-    window_start = now_utc - dt.timedelta(hours=24)                     # 24 hours ago
-    window_end = now_utc + dt.timedelta(hours=1)                        # 1 hour from now
+    now_utc = dt.datetime.now(dt.timezone.utc) # define current time
+    window_start = now_utc - dt.timedelta(hours=24) # 24 hours ago
+    window_end = now_utc + dt.timedelta(hours=1) # 1 hour from now
 
     rows: List[Dict[str, Any]] = [] # will hold the final row-shaped records
     ingested_at = now_utc.isoformat() # timestamp for when data was ingested
