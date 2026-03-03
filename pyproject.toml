@@ -1,7 +1,7 @@
 [project]
-name = "genlogs"
+name = "genlogs-weather-pipeline"
 version = "0.1.0"
-description = "Add your description here"
+description = "Hourly weather ingestion pipeline with Snowflake + dbt incremental modeling."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
