@@ -1,12 +1,12 @@
-CREATE TABLE if not exists raw.weather_hourly (
-    location_name STRING,
-    latitude FLOAT,
-    longitude FLOAT,
-    forecast_hour TIMESTAMP_NTZ,
-    temperature_2m FLOAT,
-    precipitation FLOAT,
-    precipitation_probability FLOAT,
-    is_day BOOLEAN,
-    ingested_at TIMESTAMP_NTZ,
-    source STRING
+create or replace TABLE GENLOGS.RAW.WEATHER_HOURLY_RAW (
+	LOCATION_NAME VARCHAR(16777216),
+	LATITUDE FLOAT,
+	LONGITUDE FLOAT,
+	FORECAST_HOUR TIMESTAMP_NTZ(9),
+	TEMPERATURE_2M FLOAT,
+	PRECIPITATION FLOAT,
+	PRECIPITATION_PROBABILITY FLOAT,
+	IS_DAY BOOLEAN,
+	INGESTED_AT TIMESTAMP_NTZ(9),
+	SOURCE VARCHAR(16777216)
 );
