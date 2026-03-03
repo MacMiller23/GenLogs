@@ -23,14 +23,15 @@ def main() -> None:
     logger.info("Starting genlogs weather ingestion job")
     logger.debug("LOG_LEVEL=%s", LOG_LEVEL)
 
-    logger.info("Target locations (defined in config/locations.py):")
+    logger.info("Target locations:")
     for loc in LOCATIONS:
         logger.info(" - %s (lat=%s, lon=%s)", loc.name, loc.lat, loc.lon)
 
+    # For initial skeleton, just test the Open-Meteo extraction for the first location and log the number of rows returned.
+    rows = fetch_hourly_weather_rows(LOCATIONS[0])
+    logger.info(f"Rows returned: {len(rows)}")    
     logger.info("Skeleton run complete — extraction not yet implemented")
 
 
 if __name__ == "__main__":
-    rows = fetch_hourly_weather_rows(LOCATIONS[0])
-    logger.info(f"Rows returned: {len(rows)}")
     main()
