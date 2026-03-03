@@ -30,7 +30,7 @@ def main() -> None:
     # For initial skeleton, just test the Open-Meteo extraction for the first location and log the number of rows returned.
     rows = fetch_hourly_weather_rows(LOCATIONS[0])
     logger.info(f"Rows returned: {len(rows)}")    
-    logger.info("Skeleton run complete — extraction not yet implemented")
+    logger.info("Skeleton run complete — loading not yet implemented")
 
 
 if __name__ == "__main__":
