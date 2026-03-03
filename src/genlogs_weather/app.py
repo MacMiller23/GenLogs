@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from genlogs_weather.config.locations import LOCATIONS #config/locations.py
 from genlogs_weather.extract.openmateo import fetch_hourly_weather_rows #extract/openmateo.py
+from genlogs_weather.load.snowflake_loader import insert_weather_rows #load/snowflake_loader.py
 
 # Load .env for secure configs
 load_dotenv()
@@ -28,10 +29,17 @@ def main() -> None:
         logger.info(" - %s (lat=%s, lon=%s)", loc.name, loc.lat, loc.lon)
 
     # For initial skeleton, just test the Open-Meteo extraction for the first location and log the number of rows returned.
-    rows = fetch_hourly_weather_rows(LOCATIONS[0])
-    logger.info(f"Rows returned: {len(rows)}")    
-    logger.info("Skeleton run complete — loading not yet implemented")
+    all_rows = []
 
+    for loc in LOCATIONS:
+        rows = fetch_hourly_weather_rows(loc)
+        logger.info("Extracted %s rows for %s", len(rows), loc.name)
+        all_rows.extend(rows)
+    logger.info("Total rows extracted across all locations: %s", len(all_rows))
+
+    insert_weather_rows(all_rows)
+
+    logger.info("Loaded %s rows into Snowflake", len(all_rows))
 
 if __name__ == "__main__":
     main()
