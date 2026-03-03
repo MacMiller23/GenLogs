@@ -32,5 +32,10 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
     response = requests.get(OPEN_METEO_URL, params=params, timeout=30)
     response.raise_for_status()
     payload = response.json()
-    print(json.dumps(payload, indent=2)[:2000]) 
-    return []
+    
+    hourly = payload.get("hourly") or {}
+    times = hourly.get("time") or []
+    temps = hourly.get("temperature_2m") or []
+    precip = hourly.get("precipitation") or []
+    precip_prob = hourly.get("precipitation_probability") or []
+    is_day = hourly.get("is_day") or []
