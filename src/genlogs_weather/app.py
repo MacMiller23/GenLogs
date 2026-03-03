@@ -16,3 +16,18 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s - %(message)s", # Log format: timestamp, log level, logger name, and message
 )
 logger = logging.getLogger("genlogs_weather")
+
+def main() -> None:
+    """Orchestrates the job. Keeps API + Snowflake logic in helper modules."""
+    logger.info("Starting genlogs weather ingestion job")
+    logger.debug("LOG_LEVEL=%s", LOG_LEVEL)
+
+    logger.info("Target locations (defined in config/locations.py):")
+    for loc in LOCATIONS:
+        logger.info(" - %s (lat=%s, lon=%s)", loc.name, loc.lat, loc.lon)
+
+    logger.info("Skeleton run complete — extraction not yet implemented")
+
+
+if __name__ == "__main__":
+    main()
