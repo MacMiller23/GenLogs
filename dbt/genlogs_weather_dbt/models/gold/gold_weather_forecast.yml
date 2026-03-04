@@ -1,13 +1,15 @@
 version: 2
 
 models:
-  - name: weather_hourly
+  - name: gold_weather_forecast
     columns:
       - name: location_name
+        description: "Name of the location for the weather forecast."
         tests:
           - not_null
 
       - name: forecast_hour
+        description: "Hour for which the weather is forecasted."
         tests:
           - not_null
 
