@@ -15,7 +15,7 @@ select
     is_day,
     ingested_at
 
-from {{ ref('staging_weather_hourly') }}
+from {{ ref('silver_weather_hourly') }}
 
 {% if is_incremental() %}
 
