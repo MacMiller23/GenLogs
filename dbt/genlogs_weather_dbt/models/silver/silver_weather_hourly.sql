@@ -1,7 +1,7 @@
 with source as (
 
     select *
-    from {{ source('raw', 'WEATHER_HOURLY_RAW') }}
+    from {{ source('bronze', 'WEATHER_HOURLY_RAW') }}
 
 ),
 
