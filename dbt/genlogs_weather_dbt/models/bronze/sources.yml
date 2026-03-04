@@ -7,6 +7,7 @@ sources:
 
     tables:
       - name: WEATHER_HOURLY_RAW
+        description: "Raw hourly weather data ingested from the source system."
 
         config:
         
