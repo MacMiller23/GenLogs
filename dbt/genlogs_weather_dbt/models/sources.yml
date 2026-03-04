@@ -1,0 +1,8 @@
+version: 2 
+
+sources:
+  - name: raw
+    database: GENLOGS
+    schema: RAW
+    tables:
+      - name: WEATHER_HOURLY_RAW
