@@ -7,7 +7,7 @@ from genlogs_weather.config.locations import Location
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
-def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
+def fetch_hourly_weather_rows(location: Location, pipeline_run_id: str) -> List[Dict[str, Any]]:
     """
         Fetch hourly weather data for a single location and return row-shaped records:
         one row per (location, forecast_hour).
@@ -69,6 +69,7 @@ def fetch_hourly_weather_rows(location: Location) -> List[Dict[str, Any]]:
         if window_start <= ts <= window_end:
             rows.append(
                 {
+                    "pipeline_run_id": pipeline_run_id,
                     "location_name": location.name,
                     "latitude": location.lat,
                     "longitude": location.lon,

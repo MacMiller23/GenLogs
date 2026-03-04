@@ -25,10 +25,10 @@ def insert_weather_rows(rows: List[Dict[str, Any]]) -> None:
         # Assuming a table structure that matches the row keys; adjust as needed
         insert_query = """
             INSERT INTO WEATHER_HOURLY_RAW (
-                location_name, latitude, longitude, forecast_hour,
+                pipeline_run_id,location_name, latitude, longitude, forecast_hour,
                 temperature_2m, precipitation, precipitation_probability,
                 is_day, ingested_at, source
-            ) VALUES (%(location_name)s, %(latitude)s, %(longitude)s, %(forecast_hour)s,
+            ) VALUES (%(pipeline_run_id)s, %(location_name)s, %(latitude)s, %(longitude)s, %(forecast_hour)s,
                       %(temperature_2m)s, %(precipitation)s, %(precipitation_probability)s,
                       %(is_day)s, %(ingested_at)s, %(source)s)
         """
