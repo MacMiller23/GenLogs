@@ -9,11 +9,6 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
-seeds:
-  # Builds seeds into '<your_schema_name>_raw'
-  genlogs_weather_dbt:
-    +schema: raw
-
 models:
   genlogs_weather_dbt:
     +static_analysis: strict
