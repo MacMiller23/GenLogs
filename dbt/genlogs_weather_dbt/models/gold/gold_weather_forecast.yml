@@ -2,6 +2,8 @@ version: 2
 
 models:
   - name: gold_weather_forecast
+    description: "Gold layer of the weather forecast data"
+    
     columns:
       - name: location_name
         description: "Name of the location for the weather forecast."
