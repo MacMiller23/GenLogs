@@ -1,8 +1,16 @@
-version: 2 
+version: 2
 
 sources:
   - name: bronze
     database: GENLOGS
     schema: RAW
+
     tables:
       - name: WEATHER_HOURLY_RAW
+
+        config:
+        
+          loaded_at_field: ingested_at
+          freshness:
+            warn_after: {count: 2, period: hour}
+            error_after: {count: 6, period: hour}

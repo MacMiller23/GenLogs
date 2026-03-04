@@ -12,10 +12,6 @@ clean-targets:
 models:
   genlogs_weather_dbt:
 
-    bronze:
-      +schema: bronze
-      +materialized: view
-
     silver:
       +schema: silver
       +materialized: view
