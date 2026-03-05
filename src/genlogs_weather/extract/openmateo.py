@@ -3,21 +3,21 @@ import datetime as dt
 import time
 from typing import Any, Dict, List
 import requests
-from genlogs_weather.config.locations import Location
+from genlogs_weather.config.locations import Location #pass to use the Location class defined in config/locations.py for type hinting
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
-def fetch_hourly_weather_rows(location: Location, pipeline_run_id: str) -> List[Dict[str, Any]]:
+def fetch_hourly_weather_rows(location: Location, pipeline_run_id: str) -> List[Dict[str, Any]]: 
     """
         Fetch hourly weather data for a single location and return row-shaped records:
         one row per (location, forecast_hour).
 
-        Requirements mapping:
+        Requirements mapping per prompt:
         - Include: temperature, precipitation, precipitation_probability, is_day
         - Ingest: 24 hours of history + next 1 hour of forecast
         """
     params = {
-        "latitude": location.lat,
+        "latitude": location.lat, 
         "longitude": location.lon,
         # Request the required hourly fields
         "hourly": "temperature_2m,precipitation,precipitation_probability,is_day",
@@ -25,7 +25,7 @@ def fetch_hourly_weather_rows(location: Location, pipeline_run_id: str) -> List[
         # Using relative days keeps it repeatable without hardcoding dates.
         "past_days": 1,
         "forecast_days": 1,
-        # Keep output in a consistent timezone for storage; UTC is simplest for pipelines.
+        # Keep output in a consistent timezone for storage; UTC is simplest for pipelines becuase 
         "timezone": "UTC",
     }
 
@@ -49,7 +49,7 @@ def fetch_hourly_weather_rows(location: Location, pipeline_run_id: str) -> List[
     is_day = hourly.get("is_day") or []
 
     n = len(times) # num hourly values returned; should be same for all
-    if not all(len(arr) == n for arr in [temps, precip, precip_prob, is_day]):
+    if not all(len(arr) == n for arr in [temps, precip, precip_prob, is_day]): # account for potential API changes or issues where some fields might be missing values
         raise ValueError(
             f"Hourly arrays length mismatch for {location.name}: "
             f"time={len(times)}, temp={len(temps)}, precip={len(precip)}, "
