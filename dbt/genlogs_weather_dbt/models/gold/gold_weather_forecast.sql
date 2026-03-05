@@ -8,11 +8,15 @@ select
     location_name,
     latitude,
     longitude,
-    forecast_hour,
-    temperature_2m as temperature,
+    day_period,
+    temperature_c,
+    temperature_f,
+    temperature_band,
     precipitation,
     precipitation_probability,
-    is_day,
+    forecast_hour_of_day,
+    forecast_hour,
+    forecast_date,
     ingested_at
 
 from {{ ref('silver_weather_hourly') }}
