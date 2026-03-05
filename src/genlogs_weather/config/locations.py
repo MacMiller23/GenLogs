@@ -18,5 +18,5 @@ LOCATIONS: List[Location] = [
     Location("New York, NY", 40.7128, -74.0060),
     Location("Washington, DC", 38.9072, -77.0369),
     Location("San Francisco, CA", 37.7749, -122.4194),
-    Location("Daniel Boone National Forest, KY", 37.5952, -83.5243),
+    Location("Daniel Boone National Forest, KY", 37.0210, -84.2873), # went to google maps, clicked on Daniel Boone National Forest, and got the coordinates from the URL
 ]
