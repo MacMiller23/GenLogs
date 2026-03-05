@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: bronze
+  - name: weather_api
     database: GENLOGS
     schema: RAW
 
