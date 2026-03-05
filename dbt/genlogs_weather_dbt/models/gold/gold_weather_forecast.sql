@@ -14,6 +14,7 @@ select
     temperature_band,
     precipitation,
     precipitation_probability,
+    precip_risk,
     forecast_hour_of_day,
     forecast_hour,
     forecast_date,

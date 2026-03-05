@@ -57,7 +57,11 @@ select
         end as temperature_band, -- temp bands for easier analysis   
         precipitation,
         precipitation_probability,
-
+        case
+            when precipitation_probability < 20 then 'low'
+            when precipitation_probability < 50 then 'moderate'
+            else 'high'
+        end as precip_risk, -- precip risk bands for easier analysis    
         --time
         {# is_day, #}                
         forecast_hour,
