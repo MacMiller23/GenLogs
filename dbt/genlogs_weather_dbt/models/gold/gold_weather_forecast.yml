@@ -2,7 +2,9 @@ version: 2
 
 models:
   - name: gold_weather_forecast
-    description: "Gold layer of the weather forecast data"
+    description: "Incremental analytics model containing hourly weather forecasts.
+                  Built from the deduplicated silver layer and keyed by location_name
+                  and forecast_hour to prevent duplicate forecast records"
     
     columns:
       - name: location_name
@@ -11,9 +13,15 @@ models:
           - not_null
 
       - name: forecast_hour
-        description: "Hour for which the weather is forecasted."
+        description: "UTC formatted hour for which the weather is forecasted."
         tests:
           - not_null
+      
+      - name: temperature_c
+        description: "Forecasted temperature taken 2 meters off the ground in Celsius for the given location and hour."
+
+      - name: temperature_f
+        description: "Forecasted temperature taken 2 meters off the ground in Fahrenheit for the given location and hour."
 
     tests:
       - dbt_utils.unique_combination_of_columns:
