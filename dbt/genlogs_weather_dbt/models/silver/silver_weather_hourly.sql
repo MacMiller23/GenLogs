@@ -11,7 +11,7 @@ with raw_weather as (
         is_day,
         ingested_at,
         source
-    from {{ source('bronze', 'WEATHER_HOURLY_RAW') }}
+    from {{ source('weather_api', 'WEATHER_HOURLY_RAW') }}
 
 ),
 
