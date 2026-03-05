@@ -24,9 +24,9 @@ from {{ ref('silver_weather_hourly') }}
 
 {% if is_incremental() %}
 
-where ingested_at >
+where forecast_hour >
 (
-    select coalesce(max(ingested_at), to_timestamp('1900-01-01'))
+    select coalesce(max(forecast_hour), to_timestamp('1900-01-01'))
     from {{ this }}
 )
 
