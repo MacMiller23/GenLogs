@@ -12,6 +12,12 @@ models:
         tests:
           - not_null
 
+      - name: city
+        description: "City of the location for the weather forecast."
+
+      - name: state
+        description: "State of the location for the weather forecast."
+
       - name: forecast_hour
         description: "UTC formatted hour for which the weather is forecasted."
         tests:

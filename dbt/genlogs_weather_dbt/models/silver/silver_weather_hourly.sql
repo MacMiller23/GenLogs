@@ -43,6 +43,8 @@ select
         pipeline_run_id,
         --location
         location_name,
+        split_part(location_name, ',', 1) as city,
+        split_part(location_name, ',', 2) as state,
         latitude,
         longitude,
 
@@ -62,8 +64,7 @@ select
             when precipitation_probability < 50 then 'moderate'
             else 'high'
         end as precip_risk, -- precip risk bands for easier analysis    
-        --time
-        {# is_day, #}                
+        --time        
         forecast_hour,
         date_trunc('day', forecast_hour) as forecast_date, --individual date for easier analysis
         extract(hour from forecast_hour) as forecast_hour_of_day, -- separate individual hour for easier analysis

@@ -6,6 +6,8 @@
 
 select
     location_name,
+    city,
+    state,
     latitude,
     longitude,
     day_period,
