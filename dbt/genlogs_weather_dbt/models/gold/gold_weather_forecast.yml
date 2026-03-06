@@ -17,10 +17,10 @@ models:
         tests:
           - not_null
       
-      - name: temperature_c
+      - name: temperature_2m_c
         description: "Forecasted temperature taken 2 meters off the ground in Celsius for the given location and hour."
 
-      - name: temperature_f
+      - name: temperature_2m_f
         description: "Forecasted temperature taken 2 meters off the ground in Fahrenheit for the given location and hour."
 
     tests:

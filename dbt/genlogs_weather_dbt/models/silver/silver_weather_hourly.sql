@@ -47,8 +47,8 @@ select
         longitude,
 
         --weather
-        temperature_2m as temperature_c,
-        {{ c_to_f('temperature_2m') }} as temperature_f, -- 2m temp in farenheir using macro
+        temperature_2m as temperature_2m_c,
+        {{ c_to_f('temperature_2m') }} as temperature_2m_f, -- 2m temp in farenheir using macro
         case when temperature_2m < 0 then 'freezing'
             when temperature_2m between 0 and 10 then 'cold'
             when temperature_2m between 10 and 20 then 'cool'
